@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 
@@ -25,7 +26,26 @@ namespace Checkbox
             c1.Select();
             
             Console.Clear();
-            List<ArrayList> resCheckbox1 = c1.GetStatus();
+            
+            // Output
+            // format
+            List<ArrayList> resCheckbox1 = c1.GetStatus();                       
+            
+            // example usage: write indices and options to own arrays
+            string[] c1Options = new string[resCheckbox1.Count];
+            int[] c1Indices = new int[resCheckbox1.Count];
+
+            for (int i = 0; i < resCheckbox1.Count; i++)
+            {
+                // 0: get option
+                // 1: get index
+                c1Options[i] = (string)resCheckbox1[i][0];
+                c1Indices[i] = (int)resCheckbox1[i][1];
+            }
+            
+            foreach (int i in c1Indices) Console.WriteLine(i);
+            foreach (string s in c1Options) Console.WriteLine(s);
+            
             
             Console.ReadKey(true);
             
@@ -40,7 +60,25 @@ namespace Checkbox
             c2.Select();            
             
             Console.Clear();
-            List<ArrayList> resCheckbox2 = c2.GetStatus();          
+            
+            // Output
+            // format
+            List<ArrayList> resCheckbox2 = c2.GetStatus();                       
+            
+            // example usage: write indices and options to own arrays
+            string[] c2Options = new string[resCheckbox2.Count];
+            int[] c2Indices = new int[resCheckbox2.Count];
+
+            for (int i = 0; i < resCheckbox2.Count; i++)
+            {
+                // 0: get option
+                // 1: get index
+                c2Options[i] = (string)resCheckbox2[i][0];
+                c2Indices[i] = (int)resCheckbox2[i][1];
+            }
+            
+            foreach (int i in c2Indices) Console.WriteLine(i);
+            foreach (string s in c2Options) Console.WriteLine(s);        
             
             Console.ReadKey(true);
             
@@ -55,7 +93,25 @@ namespace Checkbox
             c3.Select();            
             
             Console.Clear();
-            List<ArrayList> resCheckbox3 = c3.GetStatus();          
+            
+            // Output
+            // format
+            List<ArrayList> resCheckbox3 = c3.GetStatus();                       
+            
+            // example usage: write indices and options to own arrays
+            string[] c3Options = new string[resCheckbox3.Count];
+            int[] c3Indices = new int[resCheckbox3.Count];
+
+            for (int i = 0; i < resCheckbox3.Count; i++)
+            {
+                // 0: get option
+                // 1: get index
+                c3Options[i] = (string)resCheckbox3[i][0];
+                c3Indices[i] = (int)resCheckbox3[i][1];
+            }
+            
+            foreach (int i in c3Indices) Console.WriteLine(i);
+            foreach (string s in c3Options) Console.WriteLine(s);        
             
             Console.ReadKey(true);
             
@@ -70,11 +126,25 @@ namespace Checkbox
             c4.Select();            
             
             Console.Clear();
-            List<ArrayList> resCheckbox4 = c4.GetStatus();          
+            // Output
+            // format
+            List<ArrayList> resCheckbox4 = c4.GetStatus();                       
             
-            Console.ReadKey(true);
+            // example usage: write indices and options to own arrays
+            string[] c4Options = new string[resCheckbox4.Count];
+            int[] c4Indices = new int[resCheckbox4.Count];
+
+            for (int i = 0; i < resCheckbox4.Count; i++)
+            {
+                // 0: get option
+                // 1: get index
+                c4Options[i] = (string)resCheckbox4[i][0];
+                c4Indices[i] = (int)resCheckbox4[i][1];
+            }
             
-            
+            foreach (int i in c4Indices) Console.WriteLine(i);
+            foreach (string s in c4Options) Console.WriteLine(s);  
+            Console.ReadKey(true);                        
         }
     }
 }

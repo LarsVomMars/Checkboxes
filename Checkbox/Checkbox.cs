@@ -1,7 +1,7 @@
+// https://github.com/LarsVomMars/Checkboxes
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 
 namespace Checkbox
 {
@@ -70,7 +70,7 @@ namespace Checkbox
         public void Show()
         {
             Console.Clear();
-            Console.WriteLine("Select {0} one of the options below", multi ? "at least":"");
+            Console.WriteLine("Select {0}one of the options below", multi ? "at least ":"");
             Console.WriteLine("(Use Arrow keys to navigate up and down, Space bar to select and Enter to submit)");
             foreach (var opt in options)
             {
@@ -100,12 +100,10 @@ namespace Checkbox
                 {
                     case ConsoleKey.UpArrow:
                         index = index - 1 < 0 ? options.Count - 1 : index - 1;
-                        break;
-                    
+                        break;                    
                     case ConsoleKey.DownArrow:
                         index = index + 1 > options.Count - 1 ? 0 : index + 1;
-                        break;
-                    
+                        break;                    
                     case ConsoleKey.Spacebar:
                         options[index][1] = !(bool) options[index][1];
                         if (!multi)
@@ -115,8 +113,7 @@ namespace Checkbox
                         }
 
                         error = false;
-                        break;
-                    
+                        break;                    
                     case ConsoleKey.Enter:
                         if (req)
                         {                            
@@ -129,8 +126,7 @@ namespace Checkbox
 
                             if (!end) error = true;
                         }
-                        else end = true;    
-                         
+                        else end = true;                             
                         break;
                 }
 
