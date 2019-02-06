@@ -9,16 +9,19 @@ namespace Checkbox
     {
         private int index, selectedIndex = -1;
         private bool multi, error, req = true;
+        private string disText;
         private ConsoleKey k, prevK = ConsoleKey.D9;      
         private List<ArrayList> options = new List<ArrayList>();
-            
+        
         
         /// <summary>
         ///     processes given options
         /// </summary>
-        /// <param name="opts">all options to display</param>       
-        public Checkbox(params string[] opts)
+        /// <param name="displayText">text which is displayed as headline/description for the selection</param> 
+        /// <param name="opts">all options to display</param>
+        public Checkbox(string displayText, params string[] opts)
         {
+            disText = displayText;
             int i = 0;
             foreach (string opt in opts)
                 // structure: option:string; selected:bool; hover:bool; index:int;
@@ -31,10 +34,12 @@ namespace Checkbox
         /// <summary>
         ///     processes given options
         /// </summary>
+        /// <param name="displayText">text which is displayed as headline/description for the selection</param> 
         /// <param name="multiMode">allow multiple options to be selected</param>
         /// <param name="opts">all options to display</param>
-        public Checkbox(bool multiMode, params string[] opts)
+        public Checkbox(string displayText, bool multiMode, params string[] opts)
         {
+            disText = displayText;
             multi = multiMode;
             int i = 0;
             foreach (string opt in opts)
@@ -48,12 +53,14 @@ namespace Checkbox
         /// <summary>
         ///     processes given options
         /// </summary>
+        /// <param name="displayText">text which is displayed as headline/description for the selection</param> 
         /// <param name="multiMode">allow multiple options to be selected</param>
         /// <param name="opts">all options to display</param>
-        /// <param name="required">is at least one checkbox required to be checked</param>
-        public Checkbox(bool multiMode, bool required, params string[] opts)
+        /// <param name="requiredSelect">is at least one checkbox required to be checked</param>
+        public Checkbox(string displayText, bool multiMode, bool requiredSelect, params string[] opts)
         {
-            req = required;
+            disText = displayText;
+            req = requiredSelect;
             multi = multiMode;
             int i = 0;
             foreach (string opt in opts)
@@ -70,7 +77,7 @@ namespace Checkbox
         public void Show()
         {
             Console.Clear();
-            Console.WriteLine("Select {0}one of the options below", multi ? "at least ":"");
+            Console.WriteLine(disText);
             Console.WriteLine("(Use Arrow keys to navigate up and down, Space bar to select and Enter to submit)");
             foreach (var opt in options)
             {
@@ -80,7 +87,7 @@ namespace Checkbox
             Console.ResetColor();
             if(error) Console.WriteLine("\nAt least one checkbox has to be checked");
         }
-
+    
         
         /// <summary>
         ///     switch between the options and select them

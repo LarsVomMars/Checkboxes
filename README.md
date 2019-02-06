@@ -14,4 +14,10 @@
 ### Usage:
 ###### Code examples in [Checkbox/Program.cs](https://github.com/LarsVomMars/Checkboxes/blob/master/Checkbox/Program.cs)
 
+```c#
+// first create a Checkbox object
+Checkbox c = new Checkbox 
+```
+
 # Documentation coming
+

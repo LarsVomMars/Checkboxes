@@ -20,7 +20,7 @@ namespace Checkbox
             ////////////////////////////////////////////////////////////
                         
             // class init            
-            Checkbox c1 = new Checkbox("first option", "second option", "third option", "fourth option", "fifth option");                         
+            Checkbox c1 = new Checkbox("Select one of the following options", "first option", "second option", "third option", "fourth option", "fifth option");                         
             
             c1.Show();
             c1.Select();
@@ -54,7 +54,7 @@ namespace Checkbox
             /////////////////////////////////////////////////////////////////
             
             // class init
-            Checkbox c2 = new Checkbox(true, true, "first option", "second option", "third option", "fourth option", "fifth option");                         
+            Checkbox c2 = new Checkbox("Select at least one of the following options", true, true, "first option", "second option", "third option", "fourth option", "fifth option");                         
             
             c2.Show();
             c2.Select();            
@@ -87,7 +87,7 @@ namespace Checkbox
             /////////////////////////////////////////////////////////////////
             
             // class init
-            Checkbox c3 = new Checkbox(false, false, "first option", "second option", "third option", "fourth option", "fifth option");                         
+            Checkbox c3 = new Checkbox("Select one of the following options", false, false, "first option", "second option", "third option", "fourth option", "fifth option");                         
             
             c3.Show();
             c3.Select();            
@@ -120,7 +120,7 @@ namespace Checkbox
             ///////////////////////////////////////////////////////////////////
             
             // class init
-            Checkbox c4 = new Checkbox(true, false, "first option", "second option", "third option", "fourth option", "fifth option");                         
+            Checkbox c4 = new Checkbox("Select at least one of the following options", true, false, "first option", "second option", "third option", "fourth option", "fifth option");                         
             
             c4.Show();
             c4.Select();            
