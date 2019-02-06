@@ -15,12 +15,15 @@ namespace Checkbox
             Console.InputEncoding = Console.OutputEncoding = Encoding.UTF8;
             Console.CursorVisible = false;
             
+            // string input array
+            string[] options = {"first option", "second option", "third option", "fourth option", "fifth option"};
+            
             ////////////////////////////////////////////////////////////
             //// EXAMPLE: SELECT MAX ONE OPTION; SELECTION REQUIRED ////
             ////////////////////////////////////////////////////////////
                         
             // class init            
-            Checkbox c1 = new Checkbox("Select one of the following options", "first option", "second option", "third option", "fourth option", "fifth option");                         
+            Checkbox c1 = new Checkbox("Select one of the following options", options);                         
             
             c1.Show();
             c1.Select();
@@ -29,7 +32,7 @@ namespace Checkbox
             
             // Output
             // format
-            List<ArrayList> resCheckbox1 = c1.GetStatus();                       
+            List<object[]> resCheckbox1 = c1.GetStatus();                       
             
             // example usage: write indices and options to own arrays
             string[] c1Options = new string[resCheckbox1.Count];
@@ -49,12 +52,12 @@ namespace Checkbox
             
             Console.ReadKey(true);
             
-            /////////////////////////////////////////////////////////////////
-            //// EXAMPLE: SELECT MULTIPLE OPTIONS; SELECTION REQUIRED ///////
-            /////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////
+            //// EXAMPLE: SELECT MULTIPLE OPTIONS; SELECTION REQUIRED ////
+            //////////////////////////////////////////////////////////////
             
             // class init
-            Checkbox c2 = new Checkbox("Select at least one of the following options", true, true, "first option", "second option", "third option", "fourth option", "fifth option");                         
+            Checkbox c2 = new Checkbox("Select at least one of the following options", true, options);                         
             
             c2.Show();
             c2.Select();            
@@ -63,7 +66,7 @@ namespace Checkbox
             
             // Output
             // format
-            List<ArrayList> resCheckbox2 = c2.GetStatus();                       
+            List<object[]> resCheckbox2 = c2.GetStatus();                       
             
             // example usage: write indices and options to own arrays
             string[] c2Options = new string[resCheckbox2.Count];
@@ -82,12 +85,12 @@ namespace Checkbox
             
             Console.ReadKey(true);
             
-            /////////////////////////////////////////////////////////////////
-            //// EXAMPLE: SELECT MAX ONE OPTION; NO SELECTION REQUIRED //////
-            /////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////
+            //// EXAMPLE: SELECT MAX ONE OPTION; NO SELECTION REQUIRED ////
+            ///////////////////////////////////////////////////////////////
             
             // class init
-            Checkbox c3 = new Checkbox("Select one of the following options", false, false, "first option", "second option", "third option", "fourth option", "fifth option");                         
+            Checkbox c3 = new Checkbox("Select one of the following options", false, false, options);                         
             
             c3.Show();
             c3.Select();            
@@ -96,7 +99,7 @@ namespace Checkbox
             
             // Output
             // format
-            List<ArrayList> resCheckbox3 = c3.GetStatus();                       
+            List<object[]> resCheckbox3 = c3.GetStatus();                       
             
             // example usage: write indices and options to own arrays
             string[] c3Options = new string[resCheckbox3.Count];
@@ -115,12 +118,12 @@ namespace Checkbox
             
             Console.ReadKey(true);
             
-            ///////////////////////////////////////////////////////////////////
-            //// EXAMPLE: SELECT MULTIPLE OPTIONS; NO SELECTION REQUIRED //////
-            ///////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////
+            //// EXAMPLE: SELECT MULTIPLE OPTIONS; NO SELECTION REQUIRED ////
+            /////////////////////////////////////////////////////////////////
             
             // class init
-            Checkbox c4 = new Checkbox("Select at least one of the following options", true, false, "first option", "second option", "third option", "fourth option", "fifth option");                         
+            Checkbox c4 = new Checkbox("Select at least one of the following options", true, false, options);                         
             
             c4.Show();
             c4.Select();            
@@ -128,7 +131,7 @@ namespace Checkbox
             Console.Clear();
             // Output
             // format
-            List<ArrayList> resCheckbox4 = c4.GetStatus();                       
+            List<object[]> resCheckbox4 = c4.GetStatus();                       
             
             // example usage: write indices and options to own arrays
             string[] c4Options = new string[resCheckbox4.Count];

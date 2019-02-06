@@ -151,13 +151,13 @@ namespace Checkbox
         /// <returns>
         ///     all indices and options of selected options as List of ArrayLists
         /// </returns>
-        public List<ArrayList> GetStatus()
+        public List<object[]> GetStatus()
         {
-            List<ArrayList> ret = new List<ArrayList>();
+            List<object[]> ret = new List<object[]>();
 
             foreach (var al in options)
                 if((bool)al[1]) 
-                    ret.Add(new ArrayList {(string)al[0], (int)al[3]});
+                    ret.Add(new object[] {(string)al[0], (int)al[3]});
             
             return ret;
         }

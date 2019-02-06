@@ -16,8 +16,33 @@
 
 ```c#
 // first create a Checkbox object
-Checkbox c = new Checkbox 
+
+// first parameter is the headline shown above the selec boxes
+string checkboxHeadline = "Select one of the following options";
+// standarts are no multiple selection and selection is required
+// as option you either can give an array as parameter
+string[] otps = {"1. option", "2. option", "3. option" /* ... */};
+Checkbox c1 = new Checkbox(checkboxHeadline, opts);
+// or directly as function parameter
+Checkbox c2 = new Checkbox(checkboxHeadline, /* options: */ "1. option", "2. option", "3. option" /* ... */);
+
+
+// if you want to allow multiple selection
+Checkbox c3 = new Checkbox(checkboxHeadline, /* multi-mode: */ true, opts);
+
+// if you want to disable requirement of the checkboxes
+// please note that in this case you also have to give the multi-mode parameter
+Checkbox c4 = new Checkbox(checkboxHeadline, /* multi-mode: */ false, /* required: */ false, opts);
+
+
+// after creating the Checkbox object
+// first call Show method
+// then call the Select method
+
+c1.Show();
+c1.Select();
+
+// and get the output which is a list of object arrays where one object array contains the index and the nam of the selected option
+List<object[]> result = c1.GetStatus();
+
 ```
-
-# Documentation coming
-
