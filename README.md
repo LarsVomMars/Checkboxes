@@ -44,5 +44,19 @@ c1.Select();
 
 // and get the output which is a list of object arrays where one object array contains the index and the nam of the selected option
 List<object[]> result = c1.GetStatus();
-
 ```
+
+#### Example display would be something like this
+![image](https://kroenner.eu/git/imgs/CCE.png)
+
+#### Example output would be something like this
+###### if using the method like in [Checkbox/Program.cs](https://github.com/LarsVomMars/Checkboxes/blob/master/Checkbox/Program.cs)
+
+the integer refers to the index of the option  
+the string refers to the text of the option 
+```
+2
+third option
+```
+
+if multiple options are selected all indices and texts will be outputted
