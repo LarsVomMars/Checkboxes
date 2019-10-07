@@ -21,7 +21,7 @@
 string checkboxHeadline = "Select one of the following options";
 // Standarts are no multiple selection and selection is required
 // As select option you either can give an array as parameter
-string[] otps = {"1. option", "2. option", "3. option" /* ... */};
+string[] opts = {"1. option", "2. option", "3. option" /* ... */};
 Checkbox c1 = new Checkbox(checkboxHeadline, opts);
 // Or directly as function parameter
 Checkbox c2 = new Checkbox(checkboxHeadline, /* options: */ "1. option", "2. option", "3. option" /* ... */);
