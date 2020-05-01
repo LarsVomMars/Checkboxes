@@ -1,6 +1,0 @@
-C:\Users\larsk\RiderProjects\Checkbox\Checkbox\bin\Debug\Checkbox.exe
-C:\Users\larsk\RiderProjects\Checkbox\Checkbox\bin\Debug\Checkbox.pdb
-C:\Users\larsk\RiderProjects\Checkbox\Checkbox\obj\Debug\Checkbox.csprojAssemblyReference.cache
-C:\Users\larsk\RiderProjects\Checkbox\Checkbox\obj\Debug\Checkbox.csproj.CoreCompileInputs.cache
-C:\Users\larsk\RiderProjects\Checkbox\Checkbox\obj\Debug\Checkbox.exe
-C:\Users\larsk\RiderProjects\Checkbox\Checkbox\obj\Debug\Checkbox.pdb

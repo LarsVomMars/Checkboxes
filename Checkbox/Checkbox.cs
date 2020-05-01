@@ -1,165 +1,177 @@
+// @author LarsVomMars
 // https://github.com/LarsVomMars/Checkboxes
+
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Checkbox
 {
     public class Checkbox
     {
-        private int index, selectedIndex = -1;
-        private bool multi, error, req = true;
-        private string disText;
-        private ConsoleKey k, prevK = ConsoleKey.D9;      
-        private List<ArrayList> options = new List<ArrayList>();
-        
-        
-        /// <summary>
-        ///     processes given options
-        /// </summary>
-        /// <param name="displayText">text which is displayed as headline/description for the selection</param> 
-        /// <param name="opts">all options to display</param>
-        public Checkbox(string displayText, params string[] opts)
+        private List<CheckboxOptions> _options;
+        private int _hoveredIndex;
+        private int _selectedIndex;
+        private string _displayText;
+        private bool _multiSelect;
+        private bool _required;
+        private bool _error;
+        private ConsoleKey _key;
+        private ConsoleKey _prevKey;
+
+        public Checkbox(string displayText, params string[] options)
         {
-            disText = displayText;
-            int i = 0;
-            foreach (string opt in opts)
-                // structure: option:string; selected:bool; hover:bool; index:int;
-                options.Add(new ArrayList {opt, false, false, i++});
-            
-            options[index][2] = true;
+            _multiSelect = false;
+            _required = true;
+            Init(displayText, options);
         }
-        
-        
-        /// <summary>
-        ///     processes given options
-        /// </summary>
-        /// <param name="displayText">text which is displayed as headline/description for the selection</param> 
-        /// <param name="multiMode">allow multiple options to be selected</param>
-        /// <param name="opts">all options to display</param>
-        public Checkbox(string displayText, bool multiMode, params string[] opts)
+
+        public Checkbox(string displayText, bool multiMode, bool required, params string[] options)
         {
-            disText = displayText;
-            multi = multiMode;
-            int i = 0;
-            foreach (string opt in opts)
-                // structure: option:string; selected:bool; hover:bool; index:int;
-                options.Add(new ArrayList {opt, false, false, i++});
-            
-            options[index][2] = true;
+            _multiSelect = multiMode;
+            _required = required;
+            Init(displayText, options);
         }
-        
-        
-        /// <summary>
-        ///     processes given options
-        /// </summary>
-        /// <param name="displayText">text which is displayed as headline/description for the selection</param> 
-        /// <param name="multiMode">allow multiple options to be selected</param>
-        /// <param name="opts">all options to display</param>
-        /// <param name="requiredSelect">is at least one checkbox required to be checked</param>
-        public Checkbox(string displayText, bool multiMode, bool requiredSelect, params string[] opts)
+
+        private void Init(string dt, string[] options)
         {
-            disText = displayText;
-            req = requiredSelect;
-            multi = multiMode;
-            int i = 0;
-            foreach (string opt in opts)
-                // structure: option:string; selected:bool; hover:bool; index:int;
-                options.Add(new ArrayList {opt, false, false, i++});
-            
-            options[index][2] = true;
-        }              
-        
-        
-        /// <summary>
-        ///     displays the different options 
-        /// </summary>
+            _hoveredIndex = 0;
+            _selectedIndex = -1;
+            _error = false;
+            _displayText = dt;
+
+            _options = new List<CheckboxOptions>();
+
+            for (int i = 0; i < options.Length; i++)
+                _options.Add(new CheckboxOptions(options[i], false, i == _hoveredIndex, i));
+        }
+
+        private CheckboxReturn[] ReturnData()
+        {
+            List<CheckboxReturn> l = new List<CheckboxReturn>();
+            foreach (var option in _options)
+            {
+                if (option.Selected) l.Add(option.GetData());
+            }
+
+            return l.ToArray();
+        }
+
         public void Show()
         {
             Console.Clear();
-            Console.WriteLine(disText);
+            Console.WriteLine(_displayText);
             Console.WriteLine("(Use Arrow keys to navigate up and down, Space bar to select and Enter to submit)");
-            foreach (var opt in options)
+
+            foreach (var option in _options)
             {
-                Console.ForegroundColor = (bool)opt[2] ? ConsoleColor.DarkBlue : (bool)opt[1] ? ConsoleColor.White : ConsoleColor.Gray;
-                Console.WriteLine(((bool)opt[1] ? "[*]" : "[ ]") + $" {opt[0]}");
+                Console.ForegroundColor = option.Selected
+                    ? (option.Hovered ? ConsoleColor.Blue : ConsoleColor.DarkBlue)
+                    : (option.Hovered ? ConsoleColor.White : ConsoleColor.DarkGray);
+                
+                Console.WriteLine((option.Selected ? "[*]~ " : "[ ]~ ") + $"{option.Option}");
             }
             Console.ResetColor();
-            if(error) Console.WriteLine("\nAt least one checkbox has to be checked");
+            if (_error) Console.WriteLine("\nAt least one item has to be selected!");
         }
-    
-        
-        /// <summary>
-        ///     switch between the options and select them
-        /// </summary>
-        public void Select()
-        {
-            bool end = false;
-            // TODO: select and deselect (single)
-            // TODO: required
-            do
-            {
-                k = Console.KeyAvailable ? Console.ReadKey(true).Key : ConsoleKey.D9;
-                if (k == prevK) continue;
 
-                options[index][2] = false;
-                switch (k)
+        public CheckboxReturn[] Select()
+        {
+            Show();
+            bool end = false;
+            while (!end)
+            {
+                _key = Console.KeyAvailable ? Console.ReadKey(true).Key : ConsoleKey.D9;
+                if (_key == _prevKey) continue;
+                _options[_hoveredIndex].Hovered = false;
+
+                switch (_key)
                 {
                     case ConsoleKey.UpArrow:
-                        index = index - 1 < 0 ? options.Count - 1 : index - 1;
-                        break;                    
+                    case ConsoleKey.W:
+                        _hoveredIndex = _hoveredIndex - 1 >= 0 ? _hoveredIndex - 1 : _options.Count - 1;
+                        break;
+
                     case ConsoleKey.DownArrow:
-                        index = index + 1 > options.Count - 1 ? 0 : index + 1;
-                        break;                    
+                    case ConsoleKey.S:
+                        _hoveredIndex = _hoveredIndex + 1 < _options.Count ? _hoveredIndex + 1 : 0;
+                        break;
+
                     case ConsoleKey.Spacebar:
-                        options[index][1] = !(bool) options[index][1];
-                        if (!multi)
+                        _options[_hoveredIndex].Selected = !_options[_hoveredIndex].Selected;
+                        if (!_multiSelect)
                         {
-                            if (selectedIndex > -1 && index != selectedIndex) options[selectedIndex][1] = false;
-                            selectedIndex = index;
+                            if (_selectedIndex > -1 && _hoveredIndex != _selectedIndex)
+                                _options[_selectedIndex].Selected = false;
+                            _selectedIndex = _hoveredIndex;
                         }
 
-                        error = false;
-                        break;                    
+                        _error = false;
+                        break;
+
                     case ConsoleKey.Enter:
-                        if (req)
-                        {                            
-                            foreach (var al in options)
+                        if (_required)
+                        {
+                            foreach (var option in _options)
                             {
-                                if (!(bool) al[1]) continue;
+                                if (!option.Selected) continue;
                                 end = true;
                                 break;
                             }
 
-                            if (!end) error = true;
+                            if (!end) _error = true;
                         }
-                        else end = true;                             
+                        else end = true;
+
                         break;
                 }
 
-                options[index][2] = true;
+                _options[_hoveredIndex].Hovered = true;
                 Show();
+                _prevKey = _key;
+            }
 
-                prevK = k;
-            } while (!end);
+            return ReturnData();
         }
+    }
 
-        
-        /// <summary>
-        ///     returns selected values
-        /// </summary>
-        /// <returns>
-        ///     all indices and options of selected options as List of ArrayLists
-        /// </returns>
-        public List<object[]> GetStatus()
+    public class CheckboxOptions
+    {
+        private readonly int _index;
+        private readonly string _option;
+
+        public CheckboxOptions(string option, bool selected, bool hovered, int index)
         {
-            List<object[]> ret = new List<object[]>();
-
-            foreach (var al in options)
-                if((bool)al[1]) 
-                    ret.Add(new object[] {(string)al[0], (int)al[3]});
-            
-            return ret;
+            _option = option;
+            Selected = selected;
+            Hovered = hovered;
+            _index = index;
         }
+
+        public bool Selected { get; set; }
+
+        public bool Hovered { get; set; }
+
+        public string Option => _option;
+
+        public CheckboxReturn GetData()
+        {
+            return new CheckboxReturn(_index, _option);
+        }
+    }
+
+    public class CheckboxReturn
+    {
+        private int _index;
+        private string _option;
+
+        public CheckboxReturn(int index, string option)
+        {
+            _index = index;
+            _option = option;
+        }
+
+        public int Index => _index;
+
+        public string Option => _option;
     }
 }
