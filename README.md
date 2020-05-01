@@ -9,10 +9,10 @@
 
 2. Possibility
     * Add a file called _Checkbox.cs_ using your IDE
-    * Copy paste the Code from [Checkbox/Checkbox.cs](https://github.com/LarsVomMars/Checkboxes/blob/master/Checkbox/Checkbox.cs)
+    * Copy paste the Code from [Checkbox/Checkbox.cs](Checkbox/Checkbox.cs)
 
 ### Usage:
-###### Code examples in [Checkbox/Program.cs](https://github.com/LarsVomMars/Checkboxes/blob/master/Checkbox/Program.cs)
+###### Code examples in [Checkbox/Program.cs](Checkbox/Program.cs)
 
 ```c#
 // First create a Checkbox object
@@ -26,30 +26,20 @@ Checkbox c1 = new Checkbox(checkboxHeadline, opts);
 // Or directly as function parameter
 Checkbox c2 = new Checkbox(checkboxHeadline, /* options: */ "1. option", "2. option", "3. option" /* ... */);
 
-// If you want to allow multiple selections
-Checkbox c3 = new Checkbox(checkboxHeadline, /* multi-mode: */ true, opts);
-
 // If you want to disable requirement of the checkboxes to be checked
-// Please note that in this case you also have to give the multi-mode parameter
-Checkbox c4 = new Checkbox(checkboxHeadline, /* multi-mode: */ false, /* required: */ false, opts);
+Checkbox c3 = new Checkbox(checkboxHeadline, /* multi-mode: */ false, /* required: */ false, opts);
 
 
 // After creating the Checkbox object
-// First call Show method
-// Then call the Select method
-
-c1.Show();
-c1.Select();
-
-// And get the output which is a list of object arrays where one object array contains the index and the name of the selected option
-List<object[]> result = c1.GetStatus();
+// Call the Select method which returns the selected indices and option strings
+var res1 = c1.Select();
 ```
 
 #### Example display would be something like this
 ![image](.github/cce.png)
 
 #### Example output would be something like this
-###### if using the method like in [Checkbox/Program.cs](https://github.com/LarsVomMars/Checkboxes/blob/master/Checkbox/Program.cs)
+###### if using the method like in [Checkbox/Program.cs](Checkbox/Program.cs)
 
 The integer refers to the index of the option
 The string refers to the text of the option
