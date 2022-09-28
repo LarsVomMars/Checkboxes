@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Checkbox
 {
@@ -15,6 +16,7 @@ namespace Checkbox
         private bool _multiSelect;
         private bool _required;
         private bool _error;
+        private (int Left, int Top) Pos = Console.GetCursorPosition();
         private ConsoleKey _key;
         private ConsoleKey _prevKey;
 
@@ -22,6 +24,7 @@ namespace Checkbox
         {
             _multiSelect = false;
             _required = true;
+            
             Init(displayText, options);
         }
 
@@ -56,9 +59,12 @@ namespace Checkbox
             return l.ToArray();
         }
 
-        public void Show()
+        private void Show()
         {
-            Console.Clear();
+
+            Console.SetCursorPosition(Pos.Left,Pos.Top);
+            Console.Write(new string(' ', Console.BufferWidth));
+            Console.SetCursorPosition(Pos.Left, Pos.Top);
             Console.WriteLine(_displayText);
             Console.WriteLine("(Use Arrow keys to navigate up and down, Space bar to select and Enter to submit)");
 
@@ -67,7 +73,7 @@ namespace Checkbox
                 Console.ForegroundColor = option.Selected
                     ? (option.Hovered ? ConsoleColor.Blue : ConsoleColor.DarkBlue)
                     : (option.Hovered ? ConsoleColor.White : ConsoleColor.DarkGray);
-                
+
                 Console.WriteLine((option.Selected ? "[*]~ " : "[ ]~ ") + $"{option.Option}");
             }
             Console.ResetColor();
@@ -83,6 +89,78 @@ namespace Checkbox
                 _key = Console.KeyAvailable ? Console.ReadKey(true).Key : ConsoleKey.D9;
                 if (_key == _prevKey) continue;
                 _options[_hoveredIndex].Hovered = false;
+
+                switch (_key)
+                {
+                    case ConsoleKey.UpArrow:
+                    case ConsoleKey.W:
+                        _hoveredIndex = _hoveredIndex - 1 >= 0 ? _hoveredIndex - 1 : _options.Count - 1;
+                        break;
+
+                    case ConsoleKey.DownArrow:
+                    case ConsoleKey.S:
+                        _hoveredIndex = _hoveredIndex + 1 < _options.Count ? _hoveredIndex + 1 : 0;
+                        break;
+
+                    case ConsoleKey.Spacebar:
+                        _options[_hoveredIndex].Selected = !_options[_hoveredIndex].Selected;
+                        if (!_multiSelect)
+                        {
+                            if (_selectedIndex > -1 && _hoveredIndex != _selectedIndex)
+                                _options[_selectedIndex].Selected = false;
+                            _selectedIndex = _hoveredIndex;
+                        }
+
+                        _error = false;
+                        break;
+
+                    case ConsoleKey.Enter:
+                        if (_required)
+                        {
+                            foreach (var option in _options)
+                            {
+                                if (!option.Selected) continue;
+                                end = true;
+                                break;
+                            }
+
+                            if (!end) _error = true;
+                        }
+                        else end = true;
+
+                        break;
+                }
+
+                _options[_hoveredIndex].Hovered = true;
+                Show();
+                _prevKey = _key;
+            }
+
+            return ReturnData();
+        }
+        public CheckboxReturn[] Select(int defaultOption)
+        {
+            Show();
+            bool end = false;
+            while (!end)
+            {
+                _key = Console.KeyAvailable ? Console.ReadKey(true).Key : ConsoleKey.D9;
+                if (_key == _prevKey) continue;
+                _options[_hoveredIndex].Hovered = false;
+                
+                for(int io = 0; io<=defaultOption;) {
+                    io++; 
+                    _hoveredIndex = _hoveredIndex + 1 < _options.Count ? _hoveredIndex + 1 : 0;
+                }
+                                        _options[_hoveredIndex].Selected = !_options[_hoveredIndex].Selected;
+                        if (!_multiSelect)
+                        {
+                            if (_selectedIndex > -1 && _hoveredIndex != _selectedIndex)
+                                _options[_selectedIndex].Selected = false;
+                            _selectedIndex = _hoveredIndex;
+                        }
+
+                        _error = false;
 
                 switch (_key)
                 {
